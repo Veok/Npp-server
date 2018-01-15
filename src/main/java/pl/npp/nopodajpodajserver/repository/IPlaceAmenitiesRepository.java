@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.npp.nopodajpodajserver.model.place.PlaceAmenities;
 
-@Repository("placeAmenities")
+@Repository("placeAmenitiesRepository")
 public interface IPlaceAmenitiesRepository extends JpaRepository<PlaceAmenities, Long> {
 
     PlaceAmenities findById(long id);
