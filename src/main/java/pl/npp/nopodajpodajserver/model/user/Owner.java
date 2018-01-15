@@ -1,19 +1,17 @@
 package pl.npp.nopodajpodajserver.model.user;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import pl.npp.nopodajpodajserver.model.place.Place;
+import pl.npp.nopodajpodajserver.model.reservation.Reservation;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Owner {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String name;
-    private String email;
-    private String phoneNumber;
+@DiscriminatorValue("Owner")
+public class Owner extends User{
+    private Place place;
 }

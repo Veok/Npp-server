@@ -4,6 +4,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.npp.nopodajpodajserver.model.rateSystem.Comment;
 
+import java.util.List;
+
 @Repository("commentRepository")
-public interface ICommentRepository extends JpaRepository<Comment,Long> {
+public interface ICommentRepository extends JpaRepository<Comment, Long> {
+
+    Comment findById(long id);
+
+    List<Comment> findByUserId(long userId);
+
+    List<Comment> findByPlaceId(long placeId);
 }

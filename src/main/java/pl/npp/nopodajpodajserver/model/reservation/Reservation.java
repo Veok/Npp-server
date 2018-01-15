@@ -2,6 +2,8 @@ package pl.npp.nopodajpodajserver.model.reservation;
 
 import lombok.Data;
 import pl.npp.nopodajpodajserver.model.place.Place;
+import pl.npp.nopodajpodajserver.model.user.Customer;
+import pl.npp.nopodajpodajserver.model.user.Owner;
 import pl.npp.nopodajpodajserver.model.user.User;
 
 import javax.persistence.*;
@@ -16,7 +18,9 @@ public class Reservation {
     private long id;
     @OneToOne
     private Place place;
-    @OneToOne
-    private User user;
+    @ManyToOne
+    private Customer customer;
     private String typeOfPayment;
+    private boolean isAccepted;
+    private Term term;
 }

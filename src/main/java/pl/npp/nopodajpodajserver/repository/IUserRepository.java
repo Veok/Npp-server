@@ -6,4 +6,8 @@ import pl.npp.nopodajpodajserver.model.user.User;
 
 @Repository("userRepository")
 public interface IUserRepository extends JpaRepository<User, Long> {
+
+    User findById(long id);
+
+    User findByEmail(String email);
 }

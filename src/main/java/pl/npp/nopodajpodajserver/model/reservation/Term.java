@@ -15,4 +15,5 @@ public class Term {
     private long id;
     private boolean isTaken;
     private Date date;
+    private Reservation reservation;
 }

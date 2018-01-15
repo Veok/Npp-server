@@ -8,8 +8,9 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity
-public class User{
+@Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorColumn(name="USER_TYPE")
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,12 +18,8 @@ public class User{
     private int level;
     private String password;
     private String name;
-    private String surName;
     private String phoneNumber;
     private String email;
-    private String nickName;
-    @OneToMany
-    private List<Comment> comments;
     @OneToMany
     private List<Reservation> reservations;
 

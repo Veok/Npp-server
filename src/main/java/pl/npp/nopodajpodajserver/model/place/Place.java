@@ -36,5 +36,6 @@ public class Place {
     private List<Rate> rateList;
     @OneToMany
     private List<Reservation> reservations;
+    private double score;
 
 }
