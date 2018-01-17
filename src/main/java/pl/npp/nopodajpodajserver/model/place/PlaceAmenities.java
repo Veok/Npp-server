@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * @author Paweł Lelental
+ **/
 @Data
 @Entity
 public class PlaceAmenities {

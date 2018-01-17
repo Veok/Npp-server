@@ -1,12 +1,16 @@
 package pl.npp.nopodajpodajserver.model.reservation;
 
 import lombok.Data;
-import pl.npp.nopodajpodajserver.model.place.Place;
-import pl.npp.nopodajpodajserver.model.user.User;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
+/**
+ * @author Paweł Lelental
+ **/
 @Data
 @Entity
 public class Term {

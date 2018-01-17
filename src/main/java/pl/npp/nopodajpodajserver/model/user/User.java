@@ -3,7 +3,6 @@ package pl.npp.nopodajpodajserver.model.user;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.npp.nopodajpodajserver.model.rateSystem.Comment;
 import pl.npp.nopodajpodajserver.model.reservation.Reservation;
 
 import javax.persistence.*;
@@ -13,6 +12,9 @@ import java.util.List;
 
 import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.enabled;
 
+/**
+ * @author Paweł Lelental
+ **/
 @Data
 @DiscriminatorColumn(name = "USER_TYPE")
 public abstract class User implements UserDetails {

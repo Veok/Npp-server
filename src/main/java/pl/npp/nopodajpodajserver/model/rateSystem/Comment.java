@@ -6,6 +6,9 @@ import pl.npp.nopodajpodajserver.model.user.User;
 
 import javax.persistence.*;
 
+/**
+ * @author Paweł Lelental
+ **/
 @Data
 @Entity
 public class Comment {

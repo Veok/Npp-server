@@ -4,11 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.npp.nopodajpodajserver.model.place.Place;
 import pl.npp.nopodajpodajserver.model.place.PlaceType;
-import pl.npp.nopodajpodajserver.model.reservation.Reservation;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * @author Paweł Lelental
+ **/
 @Repository("placeRepository")
 public interface IPlaceRepository extends JpaRepository<Place, Long> {
 

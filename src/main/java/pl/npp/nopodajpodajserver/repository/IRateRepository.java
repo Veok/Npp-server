@@ -8,6 +8,9 @@ import pl.npp.nopodajpodajserver.model.user.Customer;
 
 import java.util.List;
 
+/**
+ * @author Paweł Lelental
+ **/
 @Repository("rateRepository")
 public interface IRateRepository extends JpaRepository<Rate, Long> {
 

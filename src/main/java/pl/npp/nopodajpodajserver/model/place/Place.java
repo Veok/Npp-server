@@ -11,6 +11,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * @author Paweł Lelental
+ **/
 @Data
 @Entity
 public class Place {
