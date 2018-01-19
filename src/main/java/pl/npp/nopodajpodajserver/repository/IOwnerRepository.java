@@ -14,5 +14,4 @@ public interface IOwnerRepository extends JpaRepository<Owner, Long> {
 
     Owner findByEmail(String email);
 
-    Owner findByPlaceId(long id);
 }

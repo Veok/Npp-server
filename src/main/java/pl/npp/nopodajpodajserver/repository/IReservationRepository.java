@@ -3,6 +3,7 @@ package pl.npp.nopodajpodajserver.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.npp.nopodajpodajserver.model.reservation.Reservation;
+import pl.npp.nopodajpodajserver.model.reservation.Term;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface IReservationRepository extends JpaRepository<Reservation, Long>
 
     List<Reservation> findByPlaceId(long id);
 
-    List<Reservation> findByTermAndPlaceId(long id);
+    List<Reservation> findByTermAndPlaceId(Term term, long id);
 }
