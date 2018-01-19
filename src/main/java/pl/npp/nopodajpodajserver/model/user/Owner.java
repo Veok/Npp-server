@@ -6,6 +6,7 @@ import pl.npp.nopodajpodajserver.model.place.Place;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 /**
@@ -16,5 +17,6 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("Owner")
 public class Owner extends User {
+    @OneToMany
     private List<Place> places;
 }

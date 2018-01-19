@@ -1,7 +1,7 @@
 package pl.npp.nopodajpodajserver.model.place;
 
+
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import pl.npp.nopodajpodajserver.model.rateSystem.Rate;
 import pl.npp.nopodajpodajserver.model.reservation.Reservation;
 import pl.npp.nopodajpodajserver.model.reservation.Term;
@@ -17,9 +17,13 @@ import java.util.List;
 @Data
 @Entity
 public class Place {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+
+
     private String name;
     private String localizationCoordinates;
     private String street;

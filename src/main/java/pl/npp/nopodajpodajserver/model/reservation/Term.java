@@ -2,10 +2,7 @@ package pl.npp.nopodajpodajserver.model.reservation;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -19,5 +16,6 @@ public class Term {
     private long id;
     private boolean isTaken;
     private Date date;
+    @ManyToOne
     private Reservation reservation;
 }
