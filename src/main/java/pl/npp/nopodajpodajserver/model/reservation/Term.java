@@ -16,6 +16,6 @@ public class Term {
     private long id;
     private boolean isTaken;
     private Date date;
-    @ManyToOne
+    @OneToOne
     private Reservation reservation;
 }

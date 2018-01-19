@@ -22,5 +22,6 @@ public class Reservation {
     private Customer customer;
     private String typeOfPayment;
     private boolean isAccepted;
+    @OneToOne
     private Term term;
 }
