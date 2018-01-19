@@ -17,6 +17,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("Owner")
 public class Owner extends User {
+
     @OneToMany
     private List<Place> places;
 }
