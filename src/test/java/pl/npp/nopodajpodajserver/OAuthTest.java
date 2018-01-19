@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,14 @@ import pl.npp.nopodajpodajserver.config.AuthorizationConfig;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.persistence.Id;
+
 /**
  * @author Paweł Lelental
  **/
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
+@Ignore
 @SpringBootTest(classes = NopodajpodajServerApplication.class)
     public class OAuthTest {
 
