@@ -34,7 +34,7 @@ import org.springframework.test.context.ActiveProfiles;
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @SpringBootTest(classes = NopodajpodajServerApplication.class)
-public class OAuthTest {
+    public class OAuthTest {
 
     @Autowired
     private WebApplicationContext wac;
