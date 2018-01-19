@@ -32,7 +32,7 @@ public class Place {
     @Enumerated(EnumType.STRING)
     private PlaceType placeType;
     private String city;
-    @OneToOne
+    @ManyToOne
     private Owner owner;
     @OneToOne
     private PlaceAmenities placeAmenities;
