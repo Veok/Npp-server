@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
  **/
 @SpringBootApplication
 @EnableResourceServer
-@EntityScan(basePackages = {"pl.nopodajpodajserver.model"})
+@EntityScan("pl.nopodajpodajserver.model")
 public class NopodajpodajServerApplication {
 
     public static void main(String[] args) {
