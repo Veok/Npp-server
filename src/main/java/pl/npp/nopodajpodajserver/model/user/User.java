@@ -17,8 +17,7 @@ import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.enabled;
  **/
 @Data
 @Entity
-@Inheritance
-@DiscriminatorColumn(name="USER_TYPE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User implements UserDetails {
 
     static final long serialVersionUID = 1L;
