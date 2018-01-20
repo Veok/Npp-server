@@ -35,6 +35,10 @@ public class UserService implements UserDetailsService {
             return ownerRepository.findByEmail(user.getEmail());
         }
 
+        if(user.getLevel() == 0){
+            return  userRepository.findByEmail(user.getEmail());
+        }
+
         return user;
     }
 }
