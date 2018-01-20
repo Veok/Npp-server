@@ -18,8 +18,10 @@ import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.enabled;
 @Data
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name = "USER_TYPE")
+@DiscriminatorColumn
 public abstract class User implements UserDetails {
+
+    static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,10 +30,11 @@ public abstract class User implements UserDetails {
     private String password;
     private String name;
     private String phoneNumber;
+    @Column(unique = true)
     private String email;
     @OneToMany
     private List<Reservation> reservations;
-
+    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
