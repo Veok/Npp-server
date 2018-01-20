@@ -21,6 +21,8 @@ import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.enabled;
 @DiscriminatorColumn(name = "USER_TYPE")
 public abstract class User implements UserDetails {
 
+    static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
