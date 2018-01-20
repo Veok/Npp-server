@@ -35,7 +35,6 @@ public class UserService implements UserDetailsService {
             return ownerRepository.findByEmail(user.getEmail());
         }
 
-
         return user;
     }
 }
