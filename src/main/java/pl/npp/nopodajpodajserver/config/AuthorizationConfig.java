@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
 /**
  * @author Paweł Lelental
@@ -40,10 +41,15 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
         configurer.userDetailsService(userDetailsService);
     }
 
+//    @Override
+//    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+////        clients.inMemory().withClient("gigy").secret("secret").accessTokenValiditySeconds(expiration)
+////                .scopes("read", "write").authorizedGrantTypes("password", "refresh_token").resourceIds("resource");
+//    }
+
     @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().withClient("gigy").secret("secret").accessTokenValiditySeconds(expiration)
-                .scopes("read", "write").authorizedGrantTypes("password", "refresh_token").resourceIds("resource");
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+        oauthServer.allowFormAuthenticationForClients();
     }
 
 }
