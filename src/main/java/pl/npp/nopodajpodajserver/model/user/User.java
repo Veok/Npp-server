@@ -1,8 +1,7 @@
 package pl.npp.nopodajpodajserver.model.user;
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import pl.npp.nopodajpodajserver.model.reservation.Reservation;
 
 import javax.persistence.*;
@@ -17,7 +16,7 @@ import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.enabled;
  **/
 @Data
 @MappedSuperclass
-public class User implements UserDetails {
+public class User {
 
     static final long serialVersionUID = 1L;
 
@@ -33,40 +32,40 @@ public class User implements UserDetails {
     private List<Reservation> reservations;
     private boolean enabled;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<GrantedAuthority>();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        // we never lock accounts
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        // credentials never expire
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return new ArrayList<GrantedAuthority>();
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        // we never lock accounts
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        // credentials never expire
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return enabled;
+//    }
+//
+//    @Override
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return email;
+//    }
 }
