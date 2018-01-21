@@ -42,6 +42,26 @@ public class CommentRestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteComment(@PathVariable long id) {
         commentRepository.delete(id);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/byCustomer/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> findByCustomerId(@RequestParam long id) {
+        List<Comment> comments = commentRepository.findByCustomerId(id);
+        if (!comments.isEmpty()) {
+            return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<Comment>>((List<Comment>) null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/byPlace/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> findByPlacerId(@RequestParam long id) {
+        List<Comment> comments = commentRepository.findByPlaceId(id);
+        if (!comments.isEmpty()) {
+            return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<Comment>>((List<Comment>) null, HttpStatus.NOT_FOUND);
+        }
     }
 }

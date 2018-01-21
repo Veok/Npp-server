@@ -19,5 +19,5 @@ public interface IReservationRepository extends JpaRepository<Reservation, Long>
 
     List<Reservation> findByPlaceId(long id);
 
-    List<Reservation> findByTermAndPlaceId(Term term, long id);
+    List<Reservation> findByTermIdAndPlaceId(long termId, long placeId);
 }

@@ -11,13 +11,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @author Paweł Lelental
  **/
 @SpringBootApplication
-//@EnableResourceServer
 @EnableJpaRepositories("pl.npp.nopodajpodajserver")
 @EntityScan("pl.npp.nopodajpodajserver.model")
 @ComponentScan(basePackages = { "pl.npp.nopodajpodajserver" })
-public class NopodajpodajServerApplication {
+public class NoPodajPodajServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NopodajpodajServerApplication.class, args);
+        SpringApplication.run(NoPodajPodajServerApplication.class, args);
     }
 }

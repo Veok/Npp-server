@@ -44,4 +44,15 @@ public class TermRestController {
         termRepository.delete(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "byReservation/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Term> findByReservationId(@PathVariable long id) {
+        Term term = termRepository.findByReservationId(id);
+        if (term != null) {
+            return new ResponseEntity<Term>(term, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>((Term) null, HttpStatus.NOT_FOUND);
+
+        }
+    }
 }

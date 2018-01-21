@@ -16,7 +16,7 @@ public interface IRateRepository extends JpaRepository<Rate, Long> {
 
     List<Rate> findByPlaceId(long id);
 
-    List<Rate> findByCustomer(Customer customer);
+    List<Rate> findByCustomerId(long customerId);
 
     Rate findById(long id);
 

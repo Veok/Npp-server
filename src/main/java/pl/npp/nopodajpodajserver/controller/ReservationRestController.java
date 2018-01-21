@@ -44,4 +44,34 @@ public class ReservationRestController {
         reservationRepository.delete(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/byCustomer/{id}")
+    public ResponseEntity<List<Reservation>> findByCustomerId(@PathVariable long id) {
+        List<Reservation> reservations = reservationRepository.findByCustomerId(id);
+        if (!reservations.isEmpty()) {
+            return new ResponseEntity<>(reservations, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>((List<Reservation>) null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/byPlaceId/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Reservation>> findByPlaceId(@PathVariable long id) {
+        List<Reservation> reservations = reservationRepository.findByPlaceId(id);
+        if (!reservations.isEmpty()) {
+            return new ResponseEntity<>(reservations, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>((List<Reservation>) null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/byTerm/{termId}/byPlace/{placeId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Reservation>> findByTermAndPlaceId(@PathVariable long termId, @PathVariable long placeId) {
+        List<Reservation> reservations = reservationRepository.findByTermIdAndPlaceId(termId, placeId);
+        if (!reservations.isEmpty()) {
+            return new ResponseEntity<>(reservations, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>((List<Reservation>) null, HttpStatus.NOT_FOUND);
+        }
+    }
 }

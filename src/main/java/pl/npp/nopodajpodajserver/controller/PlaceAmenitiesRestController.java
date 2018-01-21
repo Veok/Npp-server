@@ -44,4 +44,14 @@ public class PlaceAmenitiesRestController {
         placeAmenitiesRepository.delete(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/byPlaceId/{id}", method = RequestMethod.GET)
+    public ResponseEntity<PlaceAmenities> findByPlaceId(@RequestParam long id) {
+        PlaceAmenities place = placeAmenitiesRepository.findByPlaceId(id);
+        if (place != null){
+            return new ResponseEntity<PlaceAmenities>(place, HttpStatus.OK);
+        } else{
+            return new ResponseEntity<PlaceAmenities>((PlaceAmenities) null, HttpStatus.NOT_FOUND);
+        }
+    }
 }
