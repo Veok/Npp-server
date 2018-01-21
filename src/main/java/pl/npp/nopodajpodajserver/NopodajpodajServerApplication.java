@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@EnableResourceServer
 @EnableJpaRepositories("pl.npp.nopodajpodajserver.model")
 @EntityScan("pl.npp.nopodajpodajserver.model")
-@ComponentScan(basePackages = { "pl.npp.nopodajpodajserver.model" })
+@ComponentScan(basePackages = { "pl.npp.nopodajpodajserver" })
 public class NopodajpodajServerApplication {
 
     public static void main(String[] args) {
