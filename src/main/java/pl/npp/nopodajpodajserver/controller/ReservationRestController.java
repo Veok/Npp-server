@@ -24,7 +24,7 @@ public class ReservationRestController {
         return new ResponseEntity<>(reservationRepository.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Reservation> getReservation(@PathVariable long id) {
         Reservation Reservation = reservationRepository.findById(id);
         if (Reservation != null) {
@@ -55,7 +55,7 @@ public class ReservationRestController {
         }
     }
 
-    @RequestMapping(value = "/byPlaceId/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/byPlace/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Reservation>> findByPlaceId(@PathVariable long id) {
         List<Reservation> reservations = reservationRepository.findByPlaceId(id);
         if (!reservations.isEmpty()) {

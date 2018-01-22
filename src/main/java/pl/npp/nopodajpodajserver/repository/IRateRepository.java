@@ -20,7 +20,7 @@ public interface IRateRepository extends JpaRepository<Rate, Long> {
 
     Rate findById(long id);
 
-    List<Rate> findByScore(double score);
+    List<Rate> findByScore(int score);
 
     List<Rate> findByCategory(Category category);
 

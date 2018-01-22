@@ -67,7 +67,7 @@ public class RateRestController {
     }
 
     @RequestMapping(value = "/byScore/{score}", method = RequestMethod.GET)
-    public ResponseEntity<List<Rate>> findByScore(@PathVariable double score) {
+    public ResponseEntity<List<Rate>> findByScore(@PathVariable int score) {
         List<Rate> rates = rateRepository.findByScore(score);
         if (!rates.isEmpty()) {
             return new ResponseEntity<>(rates, HttpStatus.OK);

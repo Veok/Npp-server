@@ -24,7 +24,7 @@ public class TermRestController {
         return new ResponseEntity<>(termRepository.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Term> getTerm(@PathVariable long id) {
         Term term = termRepository.findById(id);
         if (term != null) {
@@ -45,13 +45,13 @@ public class TermRestController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "byReservation/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/byReservation/{id}", method = RequestMethod.GET)
     public ResponseEntity<Term> findByReservationId(@PathVariable long id) {
         Term term = termRepository.findByReservationId(id);
         if (term != null) {
             return new ResponseEntity<Term>(term, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>((Term) null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Term>((Term) null, HttpStatus.NOT_FOUND);
 
         }
     }

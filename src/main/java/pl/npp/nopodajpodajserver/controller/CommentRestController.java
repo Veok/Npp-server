@@ -46,7 +46,7 @@ public class CommentRestController {
     }
 
     @RequestMapping(value = "/byCustomer/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Comment>> findByCustomerId(@RequestParam long id) {
+    public ResponseEntity<List<Comment>> findByCustomerId(@PathVariable long id) {
         List<Comment> comments = commentRepository.findByCustomerId(id);
         if (!comments.isEmpty()) {
             return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
@@ -56,7 +56,7 @@ public class CommentRestController {
     }
 
     @RequestMapping(value = "/byPlace/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Comment>> findByPlacerId(@RequestParam long id) {
+    public ResponseEntity<List<Comment>> findByPlacerId(@PathVariable long id) {
         List<Comment> comments = commentRepository.findByPlaceId(id);
         if (!comments.isEmpty()) {
             return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
