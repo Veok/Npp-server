@@ -3,6 +3,7 @@ package pl.npp.nopodajpodajserver.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import pl.npp.nopodajpodajserver.model.user.Owner;
 import pl.npp.nopodajpodajserver.repository.IOwnerRepository;
@@ -38,6 +39,7 @@ public class OwnerRestController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addOwner(@RequestBody Owner owner) {
         owner.setLevel(2);
+        owner.setPassword(DigestUtils.sha1Hex(owner.getPassword()));
         return new ResponseEntity<>(ownerRepository.save(owner), HttpStatus.CREATED);
     }
 

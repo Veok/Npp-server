@@ -1,5 +1,6 @@
 package pl.npp.nopodajpodajserver.controller;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,7 @@ public class CustomerRestController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
         customer.setLevel(1);
+        customer.setPassword(DigestUtils.sha1Hex(customer.getPassword()));
         return new ResponseEntity<>(customerRepository.save(customer), HttpStatus.CREATED);
     }
 
