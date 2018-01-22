@@ -42,7 +42,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = NoPodajPodajServerApplication.class)
 @WebAppConfiguration
-@Ignore
 public class ReservationRestControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
