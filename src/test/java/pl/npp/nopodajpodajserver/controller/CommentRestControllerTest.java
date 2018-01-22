@@ -2,6 +2,7 @@ package pl.npp.nopodajpodajserver.controller;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = NoPodajPodajServerApplication.class)
 @WebAppConfiguration
+@Ignore
 public class CommentRestControllerTest  {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
