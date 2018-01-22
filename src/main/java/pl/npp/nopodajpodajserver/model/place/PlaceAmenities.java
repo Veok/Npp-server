@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class PlaceAmenities {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
     private boolean hasShower;
     private boolean hasChangingRoom;

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 public class Rate {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
     private int score;
     @ManyToOne

@@ -15,12 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import pl.npp.nopodajpodajserver.NoPodajPodajServerApplication;
 import pl.npp.nopodajpodajserver.model.place.Place;
-import pl.npp.nopodajpodajserver.model.rateSystem.Category;
-import pl.npp.nopodajpodajserver.model.rateSystem.Rate;
-import pl.npp.nopodajpodajserver.model.user.Customer;
-import pl.npp.nopodajpodajserver.repository.ICustomerRepository;
+import pl.npp.nopodajpodajserver.model.place.PlaceAmenities;
+import pl.npp.nopodajpodajserver.repository.IPlaceAmenitiesRepository;
 import pl.npp.nopodajpodajserver.repository.IPlaceRepository;
-import pl.npp.nopodajpodajserver.repository.IRateRepository;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -39,7 +36,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @SpringBootTest(classes = NoPodajPodajServerApplication.class)
 @WebAppConfiguration
 
-public class RateRestControllerTest {
+public class PlaceAmenitiesRestControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -49,13 +46,11 @@ public class RateRestControllerTest {
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
     @Autowired
-    private ICustomerRepository customerRepository;
+    private WebApplicationContext webApplicationContext;
+    @Autowired
+    private IPlaceAmenitiesRepository placeAmenitiesRepository;
     @Autowired
     private IPlaceRepository placeRepository;
-    @Autowired
-    private IRateRepository rateRepository;
-    @Autowired
-    private WebApplicationContext webApplicationContext;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -70,59 +65,49 @@ public class RateRestControllerTest {
     }
 
     @Before
-    public void setup() throws Exception{
+    public void setup() throws Exception {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
         Place place = new Place();
-        Customer customer = new Customer();
-        Rate rate = new Rate();
-        Rate rate2 = new Rate();
-        rate.setScore(5);
-        rate.setPlace(place);
-        rate.setCustomer(customer);
-        rate2.setCategory(Category.price);
-
+        Place place1 = new Place();
+        PlaceAmenities placeAmenities = new PlaceAmenities();
+        PlaceAmenities placeAmenities1 = new PlaceAmenities();
+        placeAmenities.setPlace(place);
+        placeAmenities1.setPlace(place1);
         placeRepository.save(place);
-        customerRepository.save(customer);
-        rateRepository.save(rate);
-        rateRepository.save(rate2);
+        placeRepository.save(place1);
+        placeAmenitiesRepository.save(placeAmenities);
+        placeAmenitiesRepository.save(placeAmenities1);
+    }
+
+    @Test
+    public void getPlaceAmenities() throws Exception {
+        this.mockMvc.perform(get("/placeAmenities/1")).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType));
     }
     @Test
-    public void getRates() throws Exception {
-        this.mockMvc.perform(get("/rates")).andExpect(status().isOk())
+    public void getPlaceAllAmenities() throws Exception {
+        this.mockMvc.perform(get("/placeAmenities")).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
     }
 
     @Test
-    public void getRate() throws Exception {
-        this.mockMvc.perform(get("/rates/1")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
-    }
-
-    @Test
-    public void addRate() throws Exception {
-        String rateJson = json(new Rate());
-        this.mockMvc.perform(post("/rates")
+    public void addPlaceAmenities() throws Exception {
+        String json = json(new PlaceAmenities());
+        this.mockMvc.perform(post("/placeAmenities")
                 .contentType(contentType)
-                .content(rateJson)).andExpect(status().isCreated());
-    }
+                .content(json)).andExpect(status().isCreated());
 
-
-    @Test
-    public void findByScore() throws Exception {
-        mockMvc.perform(get("/rates/byScore/5")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
     }
 
     @Test
-    public void findByCategory() throws Exception {
-        mockMvc.perform(get("/rates/byCategory/price")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
-    }
+    public void deletePlaceAmenities() throws Exception {
+        mockMvc.perform(delete("/placeAmenities/2")).andExpect(status().isOk());
 
+    }
 
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        mappingJackson2HttpMessageConverter.write(
+        this.mappingJackson2HttpMessageConverter.write(
                 o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
     }

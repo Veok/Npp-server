@@ -44,6 +44,8 @@ public interface IPlaceRepository extends JpaRepository<Place, Long> {
 
     List<Place> findByCityAndCostAndPlaceType(String city, BigDecimal cost, PlaceType placeType);
 
-    List<Place> findByCityAndPlaceTypeAndScore(String city, PlaceType placeType, double score);
+    List<Place> findByCityAndPlaceTypeAndScore(String city, PlaceType placeType, int score);
+
+
 
 }

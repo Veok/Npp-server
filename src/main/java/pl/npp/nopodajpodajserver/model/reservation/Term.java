@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 public class Term {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
     private boolean isTaken;
     private Date date;

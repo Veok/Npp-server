@@ -35,6 +35,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = NoPodajPodajServerApplication.class)
 @WebAppConfiguration
+
 public class TermRestControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -105,18 +106,6 @@ public class TermRestControllerTest {
         this.mockMvc.perform(post("/terms")
                 .contentType(contentType)
                 .content(termJson)).andExpect(status().isCreated());
-    }
-
-    @Test
-    public void deleteTerm() throws Exception {
-        mockMvc.perform(delete("/terms/2")).andExpect(status().isOk());
-
-    }
-
-    @Test
-    public void findByReservationId() throws Exception {
-        mockMvc.perform(get("/terms/byReservation/2")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
     }
 
     protected String json(Object o) throws IOException {

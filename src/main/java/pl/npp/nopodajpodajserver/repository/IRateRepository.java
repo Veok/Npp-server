@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.npp.nopodajpodajserver.model.rateSystem.Category;
 import pl.npp.nopodajpodajserver.model.rateSystem.Rate;
-import pl.npp.nopodajpodajserver.model.user.Customer;
 
 import java.util.List;
 

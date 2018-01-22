@@ -48,7 +48,7 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byOwner/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByOwnerId(@RequestParam long id) {
+    public ResponseEntity<List<Place>> findByOwnerId(@PathVariable long id) {
         List<Place> places = placeRepository.findByOwnerId(id);
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -58,7 +58,7 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCity/{city}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByCity(@RequestParam String city) {
+    public ResponseEntity<List<Place>> findByCity(@PathVariable String city) {
         List<Place> places = placeRepository.findByCity(city);
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -68,7 +68,7 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCity/{city}/street/{street}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByCityAndStreet(@RequestParam String city, @RequestParam String street) {
+    public ResponseEntity<List<Place>> findByCityAndStreet(@PathVariable String city, @PathVariable String street) {
         List<Place> places = placeRepository.findByCityAndStreet(city, street);
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -78,7 +78,7 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byPostCode/{postCode}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByPostCode(@RequestParam String postCode) {
+    public ResponseEntity<List<Place>> findByPostCode(@PathVariable String postCode) {
         List<Place> places = placeRepository.findByPostCode(postCode);
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -88,8 +88,8 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCity/{city}/street/{street}/postCode/{postCode}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findCityAndStreetAndPostCode(@RequestParam String city, @RequestParam String street,
-                                                                    @RequestParam String postCode) {
+    public ResponseEntity<List<Place>> findCityAndStreetAndPostCode(@PathVariable String city, @PathVariable String street,
+                                                                    @PathVariable String postCode) {
         List<Place> places = placeRepository.findByCityAndStreetAndPostCode(city, street, postCode);
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -99,7 +99,7 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byPlaceType/{placeType}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByPlaceType(@RequestParam String placeType) {
+    public ResponseEntity<List<Place>> findByPlaceType(@PathVariable String placeType) {
         List<Place> places = placeRepository.findByPlaceType(PlaceType.valueOf(placeType));
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -109,7 +109,7 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCoordinates/{coordinates}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByCoordinates(@RequestParam String coordinates) {
+    public ResponseEntity<List<Place>> findByCoordinates(@PathVariable String coordinates) {
         List<Place> places = placeRepository.findByLocalizationCoordinates(coordinates);
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -119,8 +119,8 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCity/{city}/street/{street}/postCode/{postCode}/placeType/{placeType}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findCityAndStreetAndPostCodeAndPlaceType(@RequestParam String city, @RequestParam String street,
-                                                                                @RequestParam String postCode, @RequestParam String placeType) {
+    public ResponseEntity<List<Place>> findCityAndStreetAndPostCodeAndPlaceType(@PathVariable String city, @PathVariable String street,
+                                                                                @PathVariable String postCode, @PathVariable String placeType) {
         List<Place> places = placeRepository.findByCityAndStreetAndPostCodeAndPlaceType(city, street, postCode, PlaceType.valueOf(placeType));
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -130,7 +130,7 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCity/{city}/placeType/{placeType}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByCityAndPlaceType(@RequestParam String city, @RequestParam String placeType) {
+    public ResponseEntity<List<Place>> findByCityAndPlaceType(@PathVariable String city, @PathVariable String placeType) {
         List<Place> places = placeRepository.findByCityAndPlaceType(city, PlaceType.valueOf(placeType));
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -140,8 +140,8 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCity/{city}/street/{street}/placeType/{placeType}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByCityAndStreetAndPlaceType(@RequestParam String city, @RequestParam String street,
-                                                                       @RequestParam String placeType) {
+    public ResponseEntity<List<Place>> findByCityAndStreetAndPlaceType(@PathVariable String city, @PathVariable String street,
+                                                                       @PathVariable String placeType) {
         List<Place> places = placeRepository.findByCityAndStreetAndPlaceType(city, street, PlaceType.valueOf(placeType));
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -151,7 +151,7 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byPostCode/{postCode}/placeType/{placeType}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByPostCodeAndPlaceType(@RequestParam String postCode, @RequestParam String placeType) {
+    public ResponseEntity<List<Place>> findByPostCodeAndPlaceType(@PathVariable String postCode, @PathVariable String placeType) {
         List<Place> places = placeRepository.findByPostCodeAndPlaceType(postCode, PlaceType.valueOf(placeType));
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -160,8 +160,8 @@ public class PlaceRestController {
         }
     }
 
-    @RequestMapping(value = "/byPlaceAmenities/{id}/placeType/{placeType}}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByPlaceAmenitiesAndPlaceType(@RequestParam long id, @RequestParam String placeType) {
+    @RequestMapping(value = "/byPlaceAmenities/{id}/placeType/{placeType}", method = RequestMethod.GET)
+    public ResponseEntity<List<Place>> findByPlaceAmenitiesAndPlaceType(@PathVariable long id, @PathVariable String placeType) {
         List<Place> places = placeRepository.findByPlaceAmenitiesIdAndPlaceType(id, PlaceType.valueOf(placeType));
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -171,7 +171,7 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCity/{city}/cost/{cost}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByCityAndCost(@RequestParam String city, @RequestParam BigDecimal cost) {
+    public ResponseEntity<List<Place>> findByCityAndCost(@PathVariable String city, @PathVariable BigDecimal cost) {
         List<Place> places = placeRepository.findByCityAndCost(city, cost);
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -181,8 +181,8 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCity/{city}/cost/{cost}/placeType/{placeType}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByCityAndCostAndPlaceType(@RequestParam String city, @RequestParam BigDecimal cost,
-                                                                     @RequestParam String placeType) {
+    public ResponseEntity<List<Place>> findByCityAndCostAndPlaceType(@PathVariable String city, @PathVariable BigDecimal cost,
+                                                                     @PathVariable String placeType) {
         List<Place> places = placeRepository.findByCityAndCostAndPlaceType(city, cost, PlaceType.valueOf(placeType));
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
@@ -192,8 +192,8 @@ public class PlaceRestController {
     }
 
     @RequestMapping(value = "/byCity/{city}/placeType/{placeType}/score/{score}", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> findByCityAndPlaceTypeAndScore(@RequestParam String city, @RequestParam String placeType,
-                                                                      @RequestParam double score) {
+    public ResponseEntity<List<Place>> findByCityAndPlaceTypeAndScore(@PathVariable String city, @PathVariable String placeType,
+                                                                      @PathVariable int score) {
         List<Place> places = placeRepository.findByCityAndPlaceTypeAndScore(city, PlaceType.valueOf(placeType), score);
         if (!places.isEmpty()) {
             return new ResponseEntity<List<Place>>(places, HttpStatus.OK);

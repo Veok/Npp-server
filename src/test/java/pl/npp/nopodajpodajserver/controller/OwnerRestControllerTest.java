@@ -1,5 +1,6 @@
 package pl.npp.nopodajpodajserver.controller;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,20 +15,17 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import pl.npp.nopodajpodajserver.NoPodajPodajServerApplication;
-import pl.npp.nopodajpodajserver.model.place.Place;
-import pl.npp.nopodajpodajserver.model.rateSystem.Category;
-import pl.npp.nopodajpodajserver.model.rateSystem.Rate;
-import pl.npp.nopodajpodajserver.model.user.Customer;
-import pl.npp.nopodajpodajserver.repository.ICustomerRepository;
-import pl.npp.nopodajpodajserver.repository.IPlaceRepository;
-import pl.npp.nopodajpodajserver.repository.IRateRepository;
+import pl.npp.nopodajpodajserver.model.user.Owner;
+import pl.npp.nopodajpodajserver.repository.IOwnerRepository;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -39,8 +37,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @SpringBootTest(classes = NoPodajPodajServerApplication.class)
 @WebAppConfiguration
 
-public class RateRestControllerTest {
-
+public class OwnerRestControllerTest {
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
@@ -48,14 +45,11 @@ public class RateRestControllerTest {
     private MockMvc mockMvc;
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
-    @Autowired
-    private ICustomerRepository customerRepository;
-    @Autowired
-    private IPlaceRepository placeRepository;
-    @Autowired
-    private IRateRepository rateRepository;
+
     @Autowired
     private WebApplicationContext webApplicationContext;
+    @Autowired
+    private IOwnerRepository ownerRepository;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -72,58 +66,51 @@ public class RateRestControllerTest {
     @Before
     public void setup() throws Exception{
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
-        Place place = new Place();
-        Customer customer = new Customer();
-        Rate rate = new Rate();
-        Rate rate2 = new Rate();
-        rate.setScore(5);
-        rate.setPlace(place);
-        rate.setCustomer(customer);
-        rate2.setCategory(Category.price);
-
-        placeRepository.save(place);
-        customerRepository.save(customer);
-        rateRepository.save(rate);
-        rateRepository.save(rate2);
+        Owner owner = new Owner();
+        Owner owner1 = new Owner();
+        owner.setPassword(DigestUtils.sha1Hex("test"));
+        owner1.setEmail("w@w.pl");
+        ownerRepository.save(owner);
+        ownerRepository.save(owner1);
     }
     @Test
-    public void getRates() throws Exception {
-        this.mockMvc.perform(get("/rates")).andExpect(status().isOk())
+    public void getOwners() throws Exception {
+        this.mockMvc.perform(get("/owners")).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
     }
 
     @Test
-    public void getRate() throws Exception {
-        this.mockMvc.perform(get("/rates/1")).andExpect(status().isOk())
+    public void getOwner() throws Exception {
+        this.mockMvc.perform(get("/owners/2")).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
     }
 
     @Test
-    public void addRate() throws Exception {
-        String rateJson = json(new Rate());
-        this.mockMvc.perform(post("/rates")
+    public void addOwner() throws Exception {
+        Owner owner = new Owner();
+        owner.setPassword("foo");
+        String json = json(owner);
+        this.mockMvc.perform(post("/owners")
                 .contentType(contentType)
-                .content(rateJson)).andExpect(status().isCreated());
-    }
-
-
-    @Test
-    public void findByScore() throws Exception {
-        mockMvc.perform(get("/rates/byScore/5")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
+                .content(json)).andExpect(status().isCreated());
     }
 
     @Test
-    public void findByCategory() throws Exception {
-        mockMvc.perform(get("/rates/byCategory/price")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
+    public void deleteOwner() throws Exception {
+        mockMvc.perform(post("/owners/2")).andExpect(status().isOk());
     }
 
+    @Test
+    public void checkEncrypt() throws Exception {
+        assertEquals(DigestUtils.sha1Hex("test"),ownerRepository.findById(1).getPassword());
+    }
 
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        mappingJackson2HttpMessageConverter.write(
+        this.mappingJackson2HttpMessageConverter.write(
                 o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
     }
+
+
 }

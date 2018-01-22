@@ -29,20 +29,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
-/**
- * @author Paweł Lelental
- **/
-
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+
+/**
+ * @author Paweł Lelental
+ **/
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = NoPodajPodajServerApplication.class)
 @WebAppConfiguration
+
 public class ReservationRestControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -119,28 +118,7 @@ public class ReservationRestControllerTest {
                 .contentType(contentType)
                 .content(json)).andExpect(status().isCreated());
     }
-    @Test
-    public void deleteReservation() throws Exception {
-        mockMvc.perform(delete("/reservations/2")).andExpect(status().isOk());
-    }
 
-    @Test
-    public void findByCustomerId() throws Exception {
-        mockMvc.perform(get("/reservations/byCustomer/1")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
-    }
-
-    @Test
-    public void findByPlaceId() throws Exception {
-        mockMvc.perform(get("/reservations/byPlace/1")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
-    }
-
-    @Test
-    public void findByTermAndPlaceId() throws Exception {
-        mockMvc.perform(get("/reservations/byTerm/1/byPlace/1")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
-    }
 
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();

@@ -57,6 +57,7 @@ public class CommentRestController {
 
     @RequestMapping(value = "/byPlace/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Comment>> findByPlacerId(@PathVariable long id) {
+        List<Comment> w = commentRepository.findAll();
         List<Comment> comments = commentRepository.findByPlaceId(id);
         if (!comments.isEmpty()) {
             return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);

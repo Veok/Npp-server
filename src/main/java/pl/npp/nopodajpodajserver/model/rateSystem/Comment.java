@@ -3,7 +3,6 @@ package pl.npp.nopodajpodajserver.model.rateSystem;
 import lombok.Data;
 import pl.npp.nopodajpodajserver.model.place.Place;
 import pl.npp.nopodajpodajserver.model.user.Customer;
-import pl.npp.nopodajpodajserver.model.user.User;
 
 import javax.persistence.*;
 
@@ -14,7 +13,7 @@ import javax.persistence.*;
 @Entity
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
     @OneToOne
     private Customer customer;

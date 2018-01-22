@@ -1,14 +1,13 @@
 package pl.npp.nopodajpodajserver.controller;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import pl.npp.nopodajpodajserver.model.user.Owner;
 import pl.npp.nopodajpodajserver.repository.IOwnerRepository;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ public class OwnerRestController {
         return new ResponseEntity<>(ownerRepository.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Owner> getOwner(@PathVariable long id) {
         Owner owner = ownerRepository.findById(id);
         if (owner != null) {
@@ -39,16 +38,19 @@ public class OwnerRestController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addOwner(@RequestBody Owner owner) {
         owner.setLevel(2);
-        owner.setPassword(DigestUtils.sha1Hex(owner.getPassword()));
+        owner.setEnabled(true);
+        String encryptPassword = DigestUtils.sha1Hex(owner.getPassword());
+        owner.setPassword(encryptPassword);
         return new ResponseEntity<>(ownerRepository.save(owner), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteOwner(@PathVariable long id, Principal principal) {
-        Owner currentOwner = ownerRepository.findByEmail(principal.getName());
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Void> deleteOwner(@PathVariable long id) {
+        Owner currentOwner = ownerRepository.findById(id);
 
         if (currentOwner.getId() == id) {
-            ownerRepository.delete(currentOwner);
+            currentOwner.setEnabled(false);
+            ownerRepository.save(currentOwner);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

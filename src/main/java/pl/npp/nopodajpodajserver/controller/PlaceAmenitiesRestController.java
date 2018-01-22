@@ -20,11 +20,11 @@ public class PlaceAmenitiesRestController {
     private IPlaceAmenitiesRepository placeAmenitiesRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<PlaceAmenities>> getPlaceAmenities() {
+    public ResponseEntity<List<PlaceAmenities>> getAllPlaceAmenities() {
         return new ResponseEntity<>(placeAmenitiesRepository.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<PlaceAmenities> getPlaceAmenities(@PathVariable long id) {
         PlaceAmenities placeAmenities = placeAmenitiesRepository.findById(id);
         if (placeAmenities != null) {
@@ -46,7 +46,7 @@ public class PlaceAmenitiesRestController {
     }
 
     @RequestMapping(value = "/byPlaceId/{id}", method = RequestMethod.GET)
-    public ResponseEntity<PlaceAmenities> findByPlaceId(@RequestParam long id) {
+    public ResponseEntity<PlaceAmenities> findByPlaceId(@PathVariable long id) {
         PlaceAmenities place = placeAmenitiesRepository.findByPlaceId(id);
         if (place != null){
             return new ResponseEntity<PlaceAmenities>(place, HttpStatus.OK);
@@ -54,4 +54,5 @@ public class PlaceAmenitiesRestController {
             return new ResponseEntity<PlaceAmenities>((PlaceAmenities) null, HttpStatus.NOT_FOUND);
         }
     }
+
 }

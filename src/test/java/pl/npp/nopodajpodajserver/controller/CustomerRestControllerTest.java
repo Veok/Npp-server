@@ -1,5 +1,6 @@
 package pl.npp.nopodajpodajserver.controller;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,25 +10,23 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import pl.npp.nopodajpodajserver.NoPodajPodajServerApplication;
-import pl.npp.nopodajpodajserver.model.place.Place;
-import pl.npp.nopodajpodajserver.model.rateSystem.Category;
-import pl.npp.nopodajpodajserver.model.rateSystem.Rate;
 import pl.npp.nopodajpodajserver.model.user.Customer;
 import pl.npp.nopodajpodajserver.repository.ICustomerRepository;
-import pl.npp.nopodajpodajserver.repository.IPlaceRepository;
-import pl.npp.nopodajpodajserver.repository.IRateRepository;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -39,7 +38,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @SpringBootTest(classes = NoPodajPodajServerApplication.class)
 @WebAppConfiguration
 
-public class RateRestControllerTest {
+public class CustomerRestControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -48,14 +47,11 @@ public class RateRestControllerTest {
     private MockMvc mockMvc;
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
-    @Autowired
-    private ICustomerRepository customerRepository;
-    @Autowired
-    private IPlaceRepository placeRepository;
-    @Autowired
-    private IRateRepository rateRepository;
+
     @Autowired
     private WebApplicationContext webApplicationContext;
+    @Autowired
+    private ICustomerRepository customerRepository;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -72,58 +68,51 @@ public class RateRestControllerTest {
     @Before
     public void setup() throws Exception{
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
-        Place place = new Place();
         Customer customer = new Customer();
-        Rate rate = new Rate();
-        Rate rate2 = new Rate();
-        rate.setScore(5);
-        rate.setPlace(place);
-        rate.setCustomer(customer);
-        rate2.setCategory(Category.price);
-
-        placeRepository.save(place);
+        Customer customer1 = new Customer();
+        customer.setPassword(DigestUtils.sha1Hex("test"));
+        customer.setEmail("w2@w.pl");
+        customer1.setEmail("w@w.pl");
         customerRepository.save(customer);
-        rateRepository.save(rate);
-        rateRepository.save(rate2);
+        customerRepository.save(customer1);
     }
     @Test
-    public void getRates() throws Exception {
-        this.mockMvc.perform(get("/rates")).andExpect(status().isOk())
+    public void getCustomers() throws Exception {
+        this.mockMvc.perform(get("/customers")).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
     }
 
     @Test
-    public void getRate() throws Exception {
-        this.mockMvc.perform(get("/rates/1")).andExpect(status().isOk())
+    public void getCustomer() throws Exception {
+        this.mockMvc.perform(get("/customers/2")).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
     }
 
     @Test
-    public void addRate() throws Exception {
-        String rateJson = json(new Rate());
-        this.mockMvc.perform(post("/rates")
+    public void addCustomer() throws Exception {
+        Customer customer = new Customer();
+        customer.setPassword("foo");
+        String json = json(customer);
+        this.mockMvc.perform(post("/customers")
                 .contentType(contentType)
-                .content(rateJson)).andExpect(status().isCreated());
-    }
-
-
-    @Test
-    public void findByScore() throws Exception {
-        mockMvc.perform(get("/rates/byScore/5")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
+                .content(json)).andExpect(status().isCreated());
     }
 
     @Test
-    public void findByCategory() throws Exception {
-        mockMvc.perform(get("/rates/byCategory/price")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
+    public void deleteCustomer() throws Exception {
+        mockMvc.perform(post("/customers/2")).andExpect(status().isOk());
     }
 
+    @Test
+    public void checkEncrypt() throws Exception {
+        assertEquals(DigestUtils.sha1Hex("test"),customerRepository.findByEmail("w2@w.pl").getPassword());
+    }
 
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        mappingJackson2HttpMessageConverter.write(
+        this.mappingJackson2HttpMessageConverter.write(
                 o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
     }
+
 }

@@ -19,11 +19,8 @@ import java.util.List;
 public class Place {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
-
-
-
     private String name;
     private String localizationCoordinates;
     private String street;
@@ -43,6 +40,6 @@ public class Place {
     private List<Rate> rateList;
     @OneToMany
     private List<Reservation> reservations;
-    private double score;
+    private int score;
 
 }
